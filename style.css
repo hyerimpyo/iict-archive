@@ -1,0 +1,343 @@
+/* ==========================================================================
+   표혜림의 과제 아카이브 - style.css
+   컨셉: 회화적 몽환미 (Painterly Blooms & Gallery Editorial)
+   특징: 레퍼런스의 번지는 불꽃, 회화적 빛망울(Glowing Orbs), 파스텔&비비드 아티스틱 팔레트
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 디자인 시스템 & 변수 설정
+   -------------------------------------------------------------------------- */
+:root {
+  /* 레퍼런스 이미지에서 추출한 파스텔 & 몽환 딥톤 팔레트 */
+  --color-bg: #090c15;
+  --color-sky-soft: #a8d5e5;
+  --color-bloom-pink: #f48fb1;
+  --color-bloom-yellow: #ffe082;
+  --color-bloom-violet: #ce93d8;
+  --color-bloom-orange: #ffab91;
+  --color-bloom-lime: #c5e1a5;
+  
+  /* 타이포그래피 컬러스 */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.78);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  
+  /* 서체 설정 (클래식한 에디토리얼 이탈릭 서체 조합) */
+  --font-serif: "Playfair Display", "Didot", "Georgia", "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. 기본 스타일 리셋 및 레이아웃
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2.5rem 1.2rem;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   3. 회화적 몽환 배경 (Painterly Canvas BG - 레퍼런스 오마주)
+   - 순수 CSS radial-gradient 및 blur 필터로 구현한 번지는 꽃/빛망울 표현
+   -------------------------------------------------------------------------- */
+.art-canvas-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    /* 상단 좌측: 레퍼런스 1의 몽환적인 연하늘 수채화 톤 */
+    radial-gradient(circle at 20% 15%, rgba(168, 213, 229, 0.35) 0%, transparent 40%),
+    /* 상단 우측: 레퍼런스 2의 발광하는 노란 빛망울 */
+    radial-gradient(circle at 80% 20%, rgba(255, 224, 130, 0.3) 0%, rgba(244, 143, 177, 0.15) 35%, transparent 60%),
+    /* 중앙: 은은하게 번지는 바이올렛/퍼플 아우라 */
+    radial-gradient(circle at 50% 50%, rgba(206, 147, 216, 0.22) 0%, transparent 50%),
+    /* 하단 좌측: 라임 텍스처 (레퍼런스 1 오마주) */
+    radial-gradient(circle at 15% 80%, rgba(197, 225, 165, 0.25) 0%, transparent 45%),
+    /* 하단 우측: 핫핑크 & 오렌지 플라워 붐 */
+    radial-gradient(circle at 85% 85%, rgba(255, 171, 145, 0.3) 0%, rgba(244, 143, 177, 0.2) 40%, transparent 65%);
+  background-color: var(--color-bg);
+}
+
+/* 캔버스 상에서 유기적으로 불규칙하게 요동치는 아티스틱 오라 레이어 */
+.art-canvas-bg::before,
+.art-canvas-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(85px);
+  opacity: 0.65;
+  animation: painterlyPulse 18s ease-in-out infinite alternate;
+}
+
+.art-canvas-bg::before {
+  top: 25%;
+  left: 55%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, #f48fb1 0%, #ff1744 45%, transparent 70%);
+}
+
+.art-canvas-bg::after {
+  bottom: 15%;
+  left: 20%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #80deea 0%, #7e57c2 50%, transparent 75%);
+  animation-delay: -9s;
+}
+
+/* 몽환적인 유기적 파동 애니메이션 */
+@keyframes painterlyPulse {
+  0% {
+    transform: scale(1) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.18) translate(-30px, 40px) rotate(15deg);
+  }
+  100% {
+    transform: scale(0.92) translate(40px, -20px) rotate(-10deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. 메인 아카이브 컨테이너 (갤러리 에디토리얼 프레임)
+   -------------------------------------------------------------------------- */
+.gallery-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  padding: 3.8rem 3rem;
+  background: rgba(15, 18, 30, 0.58);
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 32px;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   5. 헤더 섹션 (전시회 포스터 감성)
+   -------------------------------------------------------------------------- */
+.gallery-header {
+  text-align: left;
+  margin-bottom: 3.2rem;
+}
+
+/* 상단 서브 뱃지 (미술관 캡션 스타일) */
+.exhibition-badge {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-sky-soft);
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+/* 메인 타이틀: 섬세한 파스텔 그라디언트 텍스트 */
+.artist-title {
+  font-size: 2.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 0.8rem;
+  background: linear-gradient(120deg, #ffffff 30%, var(--color-bloom-pink) 70%, var(--color-bloom-yellow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 한 줄 소개 부제목 */
+.exhibition-desc {
+  font-size: 1.02rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+}
+
+/* 에디토리얼 아티스틱 분리선 */
+.divider-line {
+  width: 100%;
+  height: 1px;
+  margin-top: 2rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0%, rgba(244, 143, 177, 0.4) 50%, transparent 100%);
+}
+
+/* --------------------------------------------------------------------------
+   6. 과제 목록 (아카이브 리스트)
+   -------------------------------------------------------------------------- */
+.archive-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* 과제 카드 항목 */
+.archive-item {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* 카드 호버 시 번지는 아티스틱 오라 배경 (레퍼런스의 꽃/빛 번짐) */
+.archive-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.item-1::before {
+  background: radial-gradient(circle at 10% 50%, rgba(244, 143, 177, 0.25) 0%, rgba(255, 224, 130, 0.1) 60%, transparent 100%);
+}
+
+.item-2::before {
+  background: radial-gradient(circle at 10% 50%, rgba(168, 213, 229, 0.25) 0%, rgba(206, 147, 216, 0.15) 60%, transparent 100%);
+}
+
+.item-3::before {
+  background: radial-gradient(circle at 10% 50%, rgba(197, 225, 165, 0.25) 0%, rgba(255, 171, 145, 0.15) 60%, transparent 100%);
+}
+
+.archive-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(244, 143, 177, 0.15);
+}
+
+.archive-item:hover::before {
+  opacity: 1;
+}
+
+/* 링크 요소 내부 정렬 */
+.archive-link {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.5rem 1.8rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+/* 넘버링 (Serif 이탈릭 예술적 넘버) */
+.item-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-sky-soft);
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+/* 과제 제목 텍스트 */
+.item-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  transition: color 0.3s ease;
+}
+
+.archive-item:hover .item-title {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+/* 아티스틱 심볼 (✦) */
+.item-symbol {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.archive-item:hover .item-symbol {
+  color: var(--color-bloom-pink);
+  transform: scale(1.3) rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   7. 모바일 반응형 (Mobile Responsive)
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .gallery-wrapper {
+    padding: 2.5rem 1.5rem;
+    border-radius: 24px;
+  }
+
+  .gallery-header {
+    margin-bottom: 2.2rem;
+  }
+
+  .artist-title {
+    font-size: 1.85rem;
+  }
+
+  .exhibition-desc {
+    font-size: 0.95rem;
+  }
+
+  .archive-link {
+    grid-template-columns: auto 1fr;
+    padding: 1.3rem 1.3rem;
+    gap: 0.9rem;
+  }
+
+  .item-symbol {
+    display: none; /* 모바일 환경에서는 텍스트 가독성을 높이기 위해 심볼 생략 */
+  }
+
+  .item-num {
+    font-size: 1rem;
+  }
+
+  .item-title {
+    font-size: 0.96rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .artist-title {
+    font-size: 1.6rem;
+  }
+}

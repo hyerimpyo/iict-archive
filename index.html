@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- TODO 1: 브라우저 탭에 보일 제목 -->
-  <title>Extra Credit Assignment</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- TODO 1: 브라우저 탭에 보일 제목 -->
+<title>Extra Credit Assignment</title>
+<!-- style.css 연결 -->
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- TODO 2: 이름 -->
-  <h1>표혜림의 과제 아카이브</h1>
+<!-- 회화적 몽환 배경 (Canvas BG) -->
+<div class="art-canvas-bg"></div>
 
-  <!-- TODO 3: 한 줄 소개 -->
-  <p>2026-2 정보문화기술입문 p5.js 과제 모음들</p>
+<!-- 메인 갤러리 컨테이너 -->
+<main class="gallery-wrapper">
+  <header class="gallery-header">
+    <div class="exhibition-badge">Exhibition & Archive</div>
+    <!-- TODO 2: 이름 -->
+    <h1 class="artist-title">표혜림의 과제 아카이브</h1>
+    <!-- TODO 3: 한 줄 소개 -->
+    <p class="exhibition-desc">2026-2 정보문화기술입문 p5.js 과제 모음들</p>
+    <div class="divider-line"></div>
+  </header>
 
   <!-- 과제 목록: href 는 과제 폴더 이름과 똑같이 (대소문자까지) -->
-  <ul>
+  <ul class="archive-list">
     <!-- TODO 4: 과제 1 제목 -->
-    <li><a href="assignment1/">Assignment 1 - 취향이 모여 만드는 사회</a></li>
+    <li class="archive-item item-1">
+      <a href="assignment1/" class="archive-link">
+        <span class="item-num">01</span>
+        <span class="item-title">Assignment 1 - 취향이 모여 만드는 사회</span>
+        <span class="item-symbol">✦</span>
+      </a>
+    </li>
 
     <!-- TODO 5: 과제 2 제목 -->
-    <li><a href="assignment2/">Assignment 2 - 반복과 우연으로 그리는 노을 Random</a></li>
+    <li class="archive-item item-2">
+      <a href="assignment2/" class="archive-link">
+        <span class="item-num">02</span>
+        <span class="item-title">Assignment 2 - 반복과 우연으로 그리는 노을 Random</span>
+        <span class="item-symbol">✦</span>
+      </a>
+    </li>
 
     <!-- (선택) 과제 3을 추가할 때: 아래 줄의 주석을 풀고, assignment3 폴더를 넣는다
-    <li><a href="assignment3/">Assignment 3 - Button</a></li>
+    <li class="archive-item item-3">
+      <a href="assignment3/" class="archive-link">
+        <span class="item-num">03</span>
+        <span class="item-title">Assignment 3 - Button</span>
+        <span class="item-symbol">✦</span>
+      </a>
+    </li>
     -->
   </ul>
+</main>
 
 </body>
 </html>
